@@ -1,0 +1,82 @@
+<html>
+  <head>
+    <title>Prediction</title>
+    <style>
+      form {
+        background-color: white;
+        width: 500px;
+        border-radius: 10px;
+      }
+
+      body {
+        background-image: linear-gradient(blue, lightblue);
+      }
+
+      h1 {
+        color: white;
+      }
+
+      label {
+        display: inline-block;
+        width: 200px;
+      }
+
+      #error {
+        color: red;
+        margin: 0px;
+        width: 180px;
+        font-size: 14px;
+        float: right;
+      }
+
+    </style>
+    <script>
+      function check() {
+          var x = document.getElementsByName("logged_in")[0].value;
+          var errorText = document.getElementById('error');
+          var submitButton = document.getElementById('predict');
+          if(x<0 || x>1) {
+            errorText.innerHTML = "This value can only take 0 or 1";
+            submitButton.disabled = true;
+          }
+          else {
+            errorText.innerHTML = "";
+            submitButton.disabled = false;
+          }
+      }
+    </script>
+  </head>
+  <body>
+    <center>
+      <h1>Enter the packet details</h1>
+    <form action="{{url_for('predict')}}" method="POST"><br/><br/>
+      <label>Service: </label>
+      <input type="text" name="service" required/><br/><br/>
+      <label>Flag: </label>
+      <input type="text" name="flag" required/><br/><br/>
+      <label>Logged in: </label>
+      <div style="display: inline-block;">       
+        <input type="number" name="logged_in" onchange="check()" required=""><br>
+        <p id="error"></p>
+      </div><br/><br/>
+      <label>Count: </label>
+      <input type="number" name="count" required/><br/><br/>
+      <label>serror_rate: </label>
+      <input type="number" step="any"  min="0" max="1" name="serror_rate" required/><br/><br/>
+      <label>srv_serror_rate: </label>
+      <input type="number" step="any"  min="0" max="1" name="srv_serror_rate" required/><br/><br/>
+      <label>same_srv_rate: </label>
+      <input type="number" step="any"  min="0" max="1" name="same_srv_rate" required/><br/><br/>
+      <label>dst_host_srv_count: </label>
+      <input type="number" name="dst_host_srv_count" required/><br/><br/>
+      <label>dst_host_same_srv_rate: </label>
+      <input type="number"  min="0" max="1" step="any" name="dst_host_same_srv_rate" required/><br/><br/>
+      <label>dst_host_serror_rate: </label>
+      <input type="number"  min="0" max="1" step="any" name="dst_host_serror_rate" required/><br/><br/>
+      <label>dst_host_srv_serror_rate: </label>
+      <input type="number"  min="0" max="1" step="any" name="dst_host_srv_serror_rate" required/><br/><br/>
+      <button type="submit" id="predict">Predict</button><br/><br/>
+    </form>
+    </center>
+  </body>
+</html>
